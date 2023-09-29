@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"> <!-- Link to the external CSS file -->
+    <title>Project 1</title>
+</head>
+<body>
+    <!-- Menu Section -->
+    <div id="menu">
+        <header>
+            <h1>Project 1</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#">File</a>
+                    <ul>
+                        <li><a href="#" id="loadCSV">Load CSV</a></li>
+                        <li><a href="#">Login to DB</a></li>
+                        <li><a href="#">Logout DB</a></li>
+                        <li><a href="#">Exit File</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">View</a>
+                    <ul>
+                        <li><a href="#">Line</a></li>
+                        <li><a href="#">Pie</a></li>
+                        <li><a href="#">Bar</a></li>
+                        <li><a href="#">Map</a></li>
+                    </ul>
+                </li>
+                <li class="submenu">
+                    <a href="#">Settings</a>
+                    <ul>
+                        <li><a href="#">User Info</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Help</a>
+                    <ul>
+                        <li><a href="#">Info</a></li>
+                        <li><a href="#">Client</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Spreadsheet Section -->
+    <div id="spreadsheet">
+        <input type="file" id="csvFileInput" style="display: none;">
+        <table id="csvTable">
+            <!-- CSV data will be displayed here -->
+        </table>
+        <div id="errorContainer" style="display: none; color: red;">
+            The data is in the wrong format. Only CSV files can be loaded!
+        </div>
+    </div>
+
+    <!-- Graph Section -->
+    <div id="graph">
+        <main>
+            <div id="messageArea">
+                <h2>Message Area</h2>
+                <p>This is the content of the Message Area.</p>
+            </div>
+
+            <div id="graphDisplay">
+                <h2>Graph Display</h2>
+                <p>This is the content of the Graph Display.</p>
+            </div>
+
+            <div id="googleTable">
+                <h2>Google Table</h2>
+                <p>This is the content of the Google Table.</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('loadCSV').addEventListener('click', function () {
+            // Trigger the file input when the "Load CSV" link is clicked
+            document.getElementById('csvFileInput').click();
+        });
+
+        document.getElementById('csvFileInput').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const contents = e.target.result;
+                    if (isCSVFormatValid(contents)) {
+                        // CSV format is valid, display the data
+                        displayCSVData(contents);
+                    } else {
+                        // Display an error message and hide the table
+                        displayError();
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        function isCSVFormatValid(data) {
+            // Check if the data is in a valid CSV format (comma-separated)
+            // You can implement a more robust CSV format validation here
+            return data.includes(',');
+        }
+
+        function displayCSVData(data) {
+            // Assuming data is a CSV string, you can parse and display it in a table
+            const csvTable = document.getElementById('csvTable');
+            csvTable.innerHTML = ''; // Clear existing data
+
+            const lines = data.split('\n');
+            const header = lines[0].split(',');
+
+            // Create a table row for the header with bold text
+            const headerRow = document.createElement('tr');
+            for (let i = 0; i < header.length; i++) {
+                const cell = document.createElement('th');
+                cell.textContent = header[i];
+                headerRow.appendChild(cell);
+            }
+            csvTable.appendChild(headerRow);
+
+            // Create table rows for data (excluding the header)
+            for (let i = 1; i < lines.length; i++) {
+                const row = document.createElement('tr');
+                const cells = lines[i].split(',');
+                for (let j = 0; j < cells.length; j++) {
+                    const cell = document.createElement('td');
+                    cell.textContent = cells[j];
+                    row.appendChild(cell);
+                }
+                csvTable.appendChild(row);
+            }
+
+            // Show the number of records in the message area
+            const messageArea = document.getElementById('messageArea');
+            messageArea.textContent = `Number of Records: ${lines.length - 1}`;
+        }
+
+        function displayError() {
+            // Display an error message and hide the table and graph
+            const errorContainer = document.getElementById('errorContainer');
+            errorContainer.style.display = 'block';
+            document.getElementById('csvTable').style.display = 'none';
+            document.getElementById('graphDisplay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
