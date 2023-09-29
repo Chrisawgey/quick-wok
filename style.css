@@ -44,3 +44,13 @@ nav ul ul li {
     width: 100%; /* Set the width to 100% to cover the entire menu width */
     white-space: nowrap;
 }
+
+/* Style for the loadCSVContainer */
+#loadCSVContainer {
+    max-width: 300px; /* Set your desired maximum width */
+    overflow-x: auto; /* Enable horizontal scrolling if content overflows */
+    padding: 10px; /* Add padding for spacing */
+    border: 1px solid #ccc; /* Add a border for visual separation */
+    border-radius: 5px; /* Add border radius for rounded corners */
+}
+

@@ -5,6 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"> <!-- Link to the external CSS file -->
     <title>Project 1</title>
+    <style>
+        /* Custom CSS for this specific page */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style for the spreadsheet container */
+        #spreadsheet {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%; /* Set to cover half of the screen */
+            border-top: 1px solid #ccc; /* Add a border for separation */
+            background-color: #fff; /* Background color for the container */
+            overflow-y: auto; /* Enable vertical scrolling if content overflows */
+            z-index: 999; /* Ensure it's on top of other content */
+        }
+        
+        /* Style for the CSV upload section within the spreadsheet container */
+        #csvFileInput {
+            margin: 20px; /* Add spacing around the file input */
+            display: block; /* Make the input full width */
+        }
+
+        /* ... Other CSS styles ... */
+    </style>
 </head>
 <body>
     <!-- Menu Section -->
@@ -48,7 +76,7 @@
 
     <!-- Spreadsheet Section -->
     <div id="spreadsheet">
-        <input type="file" id="csvFileInput" style="display: none;">
+        <input type="file" id="csvFileInput">
         <table id="csvTable">
             <!-- CSV data will be displayed here -->
         </table>
